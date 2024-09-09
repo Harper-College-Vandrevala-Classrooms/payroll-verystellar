@@ -11,5 +11,9 @@ public class TestPayroll {
     payroll = new Payroll();
   }
 
+  @Test
+  public void testOne(){
+    payroll.callMenu();
+  }
   // Add your tests here
 }
