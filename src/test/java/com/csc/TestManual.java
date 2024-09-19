@@ -1,4 +1,4 @@
-package test.java.com.csc;
+package com.csc;
 import com.csc.Payroll;
 
 public class TestManual {
