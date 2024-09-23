@@ -12,14 +12,15 @@ public class Payroll {
     double sit = 0.0;
     double union = 10.0;
     double ins = 0.0;
+    double payRate = 0.0;
     public double calcGrossPay(int hrs){
         if (hours<=40) {
-            return hrs*16.78;
+            return hrs*payRate;
         } else {
             int sum = 0;
-            sum += 40*16.78;
+            sum += 40*payRate;
             int ot = hrs%40;
-            sum += ot*(16.78*1.5);
+            sum += ot*(payRate*1.5);
             return sum;
         }
     }
@@ -54,6 +55,25 @@ public class Payroll {
         System.out.println("Welcome to the Payroll Program!\n");
         //hours loop
         while(val != true){
+            System.out.println("What is your pay rate?\n");
+            try {
+                String boo = newScanner.nextLine();
+                double i = Double.valueOf(boo);
+                payRate = i;
+                if (payRate < 0){
+                    System.out.println("Invalid Value");
+                } else {
+                    val = true;
+
+                }
+            }
+            catch (NumberFormatException ex){
+                System.out.println("Invalid Value\n");
+            }
+        }
+        val = false;
+
+        while(val != true){
         System.out.println("How many hours did you work this week?\n");
         try { 
             String boo = newScanner.nextLine();
@@ -79,7 +99,8 @@ public class Payroll {
                 int i = Integer.valueOf(boo);
                 children = i;
                 if (children < 0){
-                    System.out.println("Invalid Value\n");
+                    children = 0;
+                    val = true;
                 } else {
                     val = true;
                 }
@@ -95,7 +116,7 @@ public class Payroll {
         System.out.println("\nPayroll Stub: \n");
         String s = "Hours: " + String.format("%.1f",(double)hours);
         System.out.println(s);
-        s = "Rate: 16.78 $/hr";
+        s = "Rate: $" + String.format("%.2f",(double)payRate) + " /hr";
         System.out.println(s);
         s = "Gross: $" + String.format("%.2f",(double)grossPay) + "\n";
         System.out.println(s);
@@ -103,17 +124,35 @@ public class Payroll {
         System.out.println(s);
         s = "FedTax: $" + String.format("%.2f",(double)fit);
         System.out.println(s);
-        s = "StTax: $" + String.format("%.2f",(double)sit);
-        System.out.println(s);
-        s = "Union: $10.00";
-        System.out.println(s);
-        s = "Ins: $" + String.format("%.2f",(double)ins) + "\n";
-        System.out.println(s);
-        s = "Net: $" + String.format("%.2f",(double)netPay);
+        if(netPay<0){
+            s = "StTax: $" + String.format("%.2f",(double)sit)+"\n";
         System.out.println(s);
 
-        
-        
+            netPay += union;
+            netPay += ins;
+            s = "Net: $" + String.format("%.2f",(double)netPay)+"\n";
+            System.out.println(s);
+            s = "The employee still owes: \n";
+            System.out.println(s);
+            s = "Ins: $" + String.format("%.2f",(double)ins);
+            System.out.println(s);
+            s = "Union: $10.00\n";
+            System.out.println(s);
+
+
+        } else {
+            s = "StTax: $" + String.format("%.2f",(double)sit)+"";
+            System.out.println(s);
+            s = "Union: $10.00";
+            System.out.println(s);
+            s = "Ins: $" + String.format("%.2f", (double) ins) + "\n";
+            System.out.println(s);
+            s = "Net: $" + String.format("%.2f", (double) netPay) + "\n";
+            System.out.println(s);
+        }
+
+        s = "Thank you for using the Payroll Program!";
+        System.out.println(s);
         
 
 
